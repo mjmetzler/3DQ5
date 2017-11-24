@@ -12,7 +12,7 @@ module Milestone2 (
     output logic            SRAM_we_enable
 );
 
-milestone_2_state m2_state;
+milestone_2_state m2_state; //state
 
 
 //multiplier variables
