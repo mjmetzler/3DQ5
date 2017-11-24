@@ -78,16 +78,18 @@ always @(posedge CLOCK or negedge Resetn) begin
         end
         
         S_read_in: begin
-            
+            //1 cycle to toggle read_flag
             if (toggle) begin
                 toggle <= ~toggle;
                 read_flag <= 1'b1;
             end
+            //2 cycles to begin reading from SRAM
             else if (|reads) begin
                 SRAM_address <= read_address;
                 SRAM_we_enable <= 1'b1;
                 reads <= reads - 1'd1;
             end
+            //6 cycles to continue reading from SRAM and begin writing into DPRAM (reads finally arrive)
             else if (|reads_writes) begin
                 SRAM_address <= read_address;
                 SRAM_we_enable <= 1'b1;
